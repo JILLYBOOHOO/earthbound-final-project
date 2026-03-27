@@ -1,0 +1,43 @@
+<div class="user-dashboard container">
+  <header class="dashboard-header">
+    <h1>My Account</h1>
+    <span class="user-role">Explorer Profile</span>
+  </header>
+
+  <section class="order-history">
+    <h3>Order Tracking</h3>
+    <div *ngIf="orders.length > 0; else noOrders" class="orders-list">
+      <div class="order-card" *ngFor="let order of orders">
+        <div class="order-top">
+          <div class="order-id">Order #{{order.id}}</div>
+          <div class="order-date">Date: {{order.created_at}}</div>
+          <div class="order-status" [attr.data-status]="order.shipping_status">{{order.shipping_status}}</div>
+        </div>
+        <div class="order-body">
+          <div class="order-tracking" *ngIf="order.tracking_number">
+            <strong>Tracking Number:</strong> 
+            <span class="tracking-pill">{{order.tracking_number}}</span>
+          </div>
+          <div class="order-total">
+            <strong>Total Amount:</strong> ${{order.total_price}}
+          </div>
+          <div class="order-address">
+            <strong>Shipping to:</strong> {{order.address}}
+          </div>
+        </div>
+        <div class="order-progress">
+          <div class="step" [class.done]="order.shipping_status === 'Pending' || order.shipping_status === 'Shipped' || order.shipping_status === 'Out for Delivery' || order.shipping_status === 'Delivered'">Ordered</div>
+          <div class="step" [class.done]="order.shipping_status === 'Shipped' || order.shipping_status === 'Out for Delivery' || order.shipping_status === 'Delivered'">Shipped</div>
+          <div class="step" [class.done]="order.shipping_status === 'Out for Delivery' || order.shipping_status === 'Delivered'">On the Way</div>
+          <div class="step" [class.done]="order.shipping_status === 'Delivered'">Delivered</div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noOrders>
+      <div class="empty-orders">
+        <p>You haven't placed any orders yet.</p>
+        <button routerLink="/shop">Start Exploring</button>
+      </div>
+    </ng-template>
+  </section>
+</div>

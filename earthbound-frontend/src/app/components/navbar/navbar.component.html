@@ -1,0 +1,31 @@
+<header class="navbar">
+    <div class="container">
+      <div class="logo" routerLink="/">Earthbound</div>
+      <nav class="nav-links">
+        <a routerLink="/" routerLinkActive="active">Home</a>
+        <a routerLink="/shop" routerLinkActive="active">Shop</a>
+        <a routerLink="/blog" routerLinkActive="active">Blog</a>
+        <a routerLink="/contact" routerLinkActive="active">Contact</a>
+        <a *ngIf="isAdmin" routerLink="/admin" class="admin-link">Admin</a>
+      </nav>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." [value]="searchQuery" (input)="onSearchInput($event)" (keyup.enter)="onSearch()">
+        <button class="voice-btn" (click)="startVoiceSearch()" aria-label="Voice Search">🎤</button>
+      </div>
+      <div class="icons">
+        <button class="theme-toggle" (click)="toggleTheme()" [title]="isDarkMode() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+          {{ isDarkMode() ? '☀️' : '🌙' }}
+        </button>
+        <a routerLink="/wishlist" class="icon-link" aria-label="Wishlist">❤️</a>
+        <a routerLink="/cart" class="icon-link cart-icon" aria-label="Cart">
+          🛒
+          <span class="badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+        </a>
+        <a *ngIf="!isLoggedIn" routerLink="/login" class="login-btn">Login</a>
+        <div *ngIf="isLoggedIn" class="user-menu">
+          <span routerLink="/profile" class="profile-link">Profile</span>
+          <button (click)="onLogout()" class="logout-btn">Logout</button>
+        </div>
+      </div>
+    </div>
+</header>

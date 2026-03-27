@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthbound</title>
+       <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+  <h1>Checkout</h1>  
+  
+ <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="checkout.html">Checkout</a>
+                <a href="contactus.html" aria-current="page">Contact Us</a>
+            </nav>
+
+
+
+<section class="checkout-container">
+
+    <div class="product-preview">
+        <video controls>
+            <source src="assets/tent.mp4" type="video/mp4">
+            Your browser does not support video.
+        </video>
+        <h3>All-Weather Camping Tent</h3>
+        <p class="price">$199.99</p>
+    </div>
+
+    <form class="checkout-form" id="checkoutForm">
+        <h3>Shipping & Billing</h3>
+        
+        <label for="name">Full Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required>
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+
+        <label for="address">Shipping Address</label>
+        <input id="address" name="address" type="text" autocomplete="street-address" required>
+
+        <h3>Payment Details</h3>
+        <p class="payment-note">Secure Card Payment</p>
+        
+        <label for="card">Card Number</label>
+        <input id="card" name="cardnumber" type="text" placeholder="0000 0000 0000 0000" autocomplete="cc-number" required>
+
+        <div class="card-row">
+            <div>
+                <label for="expiry">Expiry</label>
+                <input id="expiry" name="expiry" type="text" placeholder="MM/YY" autocomplete="cc-exp" required>
+            </div>
+            <div>
+                <label for="cvv">CVV</label>
+                <input id="cvv" name="cvv" type="text" placeholder="123" autocomplete="cc-csc" required>
+            </div>
+        </div>
+
+        <h3>Quick Pay Options</h3>
+        <div class="payment-methods">
+            <span class="pay google">G Pay</span>
+            <span class="pay apple">Apple Pay</span>
+            <span class="pay paypal">PayPal</span>
+        </div>
+
+        <button type="submit" class="place-order-btn">Place Order ($199.99)</button>
+    </form>
+</section>
+
+<!-- Custom Success Modal -->
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-icon">✅</div>
+        <h2>Order Placed!</h2>
+        <p>Thank you for your purchase.</p>
+        <p class="order-id">Order ID: <span id="modalOrderId">#</span></p>
+        <button id="closeModalBtn">Continue Shopping</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            address: document.getElementById('address').value,
+            product: 'All-Weather Camping Tent', // Hardcoded for this page
+            total_price: 199.99
+        };
+
+        const modal = document.getElementById('successModal');
+        const orderIdSpan = document.getElementById('modalOrderId');
+        const closeBtn = document.getElementById('closeModalBtn');
+
+        fetch('http://localhost:3000/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.message && !data.code) {
+                // Show Custom Modal instead of alert
+                orderIdSpan.textContent = '#' + data.orderId;
+                modal.style.display = 'flex';
+                
+                closeBtn.onclick = function() {
+                    window.location.href = 'index.html';
+                }
+            } else {
+                alert('Error processing order: ' + (data.sqlMessage || data.code || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Server connection failed. Is the server running?');
+        });
+    });
+</script>
+</body>
+</html>

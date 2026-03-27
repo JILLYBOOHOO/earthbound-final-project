@@ -1,0 +1,56 @@
+<div class="home-hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Elevate Your Adventure</h1>
+    <p class="hero-subtitle">Premium outdoor gear designed for the wild at heart.</p>
+    <div class="hero-actions">
+      <button class="primary-btn" routerLink="/shop">Shop Now</button>
+      <button class="secondary-btn" routerLink="/blog">Our Story</button>
+    </div>
+  </div>
+</div>
+
+<section class="featured-categories container">
+  <h2 class="section-title">Explore by Activity</h2>
+  <div class="category-grid">
+    <div class="category-card hiking" (click)="searchByActivity('Hiking')">
+      <div class="cat-content">
+        <h3>Hiking</h3>
+        <p>Peak performance gear</p>
+      </div>
+    </div>
+    <div class="category-card camping" (click)="searchByActivity('Camping')">
+      <div class="cat-content">
+        <h3>Camping</h3>
+        <p>Your home in the wild</p>
+      </div>
+    </div>
+    <div class="category-card outdoor" (click)="searchByActivity('Outdoor')">
+      <div class="cat-content">
+        <h3>Outdoor</h3>
+        <p>Essential survival tools</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mission-section">
+  <div class="container mission-content">
+    <h2>Why Earthbound?</h2>
+    <p>We believe in the harmony between explorers and nature. Our products are ethically sourced and built to last, reducing waste and honoring the outdoors.</p>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>100%</h3>
+        <p>Sustainable</p>
+      </div>
+      <div class="stat-item">
+        <h3>50+</h3>
+        <p>Expeditions</p>
+      </div>
+      <div class="stat-item">
+        <h3>24/7</h3>
+        <p>Support</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+<div class="wishlist-page container">
+  <h1 class="wishlist-title">My Wishlist</h1>
+
+  <div *ngIf="wishlistItems.length > 0; else emptyWishlist" class="wishlist-grid">
+    <div class="wishlist-card" *ngFor="let item of wishlistItems; let i = index">
+      <div class="wishlist-image">
+        <img [src]="item.image_url || 'assets/placeholder.png'" [alt]="item.name">
+      </div>
+      <div class="wishlist-info">
+        <h3>{{item.name}}</h3>
+        <p class="wishlist-price">${{item.price}}</p>
+        <div class="wishlist-actions">
+          <button class="cart-btn" (click)="addToCart(item)">Add to Cart</button>
+          <button class="remove-btn" (click)="removeItem(i)">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyWishlist>
+    <div class="empty-wishlist">
+      <p>Your wishlist is empty.</p>
+      <button routerLink="/shop" class="shop-btn">Explore Products</button>
+    </div>
+  </ng-template>
+</div>

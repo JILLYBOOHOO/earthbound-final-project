@@ -1,0 +1,50 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="portal-toggle">
+      <button [class.active]="portalType === 'user'" (click)="setPortal('user')">User</button>
+      <button [class.active]="portalType === 'admin'" (click)="setPortal('admin')">Admin</button>
+    </div>
+
+    <div class="login-header">
+      <h2 class="login-title">{{ portalType === 'admin' ? 'Admin Gateway' : 'User Account' }}</h2>
+      <p class="login-subtitle">Sign in to the Earthbound {{ portalType }} portal</p>
+    </div>
+
+    <form (submit)="onLogin()" class="login-form">
+      <div class="input-group">
+        <label>Email Address</label>
+        <div class="input-wrapper">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="email@earthbound.com" [(ngModel)]="credentials.email" name="email" required>
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <label>Password</label>
+        <div class="input-wrapper">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="••••••••" [(ngModel)]="credentials.password" name="password" required>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="loading">
+        <span *ngIf="!loading">Launch Portal</span>
+        <span class="loader" *ngIf="loading"></span>
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p class="register-link" *ngIf="portalType === 'user'">
+        New explorer? <a routerLink="/register">Create Account</a>
+      </p>
+      <p class="admin-notice" *ngIf="portalType === 'admin'">
+        Authorized access only. Log monitoring active.
+      </p>
+    </div>
+  </div>
+
+  <div class="background-decor">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+</div>

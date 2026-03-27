@@ -1,0 +1,252 @@
+<!-- Toast Notification -->
+<div class="toast" *ngIf="notification" [class.success]="notification.type === 'success'" [class.error]="notification.type === 'error'">
+  {{notification.message}}
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" *ngIf="deleteConfirm.show" (click)="cancelDelete()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <h3>Delete Product</h3>
+    <p>Are you sure you want to delete <strong>{{deleteConfirm.productName}}</strong>? This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="cancelDelete()">Cancel</button>
+      <button class="btn-danger" (click)="executeDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-dashboard-container">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">⚡</span>
+      <h2 class="admin-title">Admin Panel</h2>
+    </div>
+    <nav class="admin-nav">
+      <button (click)="changeView('overview')" [class.active]="currentView === 'overview'">
+        <span class="nav-icon">📊</span> Overview
+      </button>
+      <button (click)="changeView('orders')" [class.active]="currentView === 'orders'">
+        <span class="nav-icon">📦</span> Orders
+      </button>
+      <button (click)="changeView('products')" [class.active]="currentView === 'products'">
+        <span class="nav-icon">🏷️</span> Products
+      </button>
+      <button (click)="changeView('add-product')" [class.active]="currentView === 'add-product' && !editingProductId">
+        <span class="nav-icon">➕</span> Add Product
+      </button>
+      <button (click)="changeView('users')" [class.active]="currentView === 'users'">
+        <span class="nav-icon">👥</span> Users
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+
+    <!-- ═══ OVERVIEW ═══ -->
+    <div *ngIf="currentView === 'overview'" class="overview-section">
+      <h3 class="section-title">Dashboard Overview</h3>
+      <div class="stats-grid">
+        <div class="stat-card products-stat">
+          <div class="stat-icon">🏷️</div>
+          <div class="stat-info">
+            <span class="stat-value">{{stats.products}}</span>
+            <span class="stat-label">Total Products</span>
+          </div>
+        </div>
+        <div class="stat-card orders-stat">
+          <div class="stat-icon">📦</div>
+          <div class="stat-info">
+            <span class="stat-value">{{stats.orders}}</span>
+            <span class="stat-label">Total Orders</span>
+          </div>
+        </div>
+        <div class="stat-card users-stat">
+          <div class="stat-icon">👥</div>
+          <div class="stat-info">
+            <span class="stat-value">{{stats.users}}</span>
+            <span class="stat-label">Registered Users</span>
+          </div>
+        </div>
+        <div class="stat-card revenue-stat">
+          <div class="stat-icon">💰</div>
+          <div class="stat-info">
+            <span class="stat-value">${{stats.revenue.toFixed(2)}}</span>
+            <span class="stat-label">Total Revenue</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Orders Preview -->
+      <h4 class="sub-title">Recent Orders</h4>
+      <div class="recent-orders">
+        <div class="order-row" *ngFor="let order of orders.slice(0, 5)">
+          <span class="order-id">#{{order.id}}</span>
+          <span class="order-customer">{{order.username}}</span>
+          <span class="order-total">${{order.total_price}}</span>
+          <span class="order-badge" [attr.data-status]="order.shipping_status">{{order.shipping_status}}</span>
+        </div>
+        <p *ngIf="orders.length === 0" class="empty-state">No orders yet.</p>
+      </div>
+    </div>
+
+    <!-- ═══ ORDERS ═══ -->
+    <div *ngIf="currentView === 'orders'" class="orders-section">
+      <h3 class="section-title">Order Management</h3>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Tracking #</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td class="cell-id">#{{order.id}}</td>
+            <td>{{order.username}} <span class="cell-email">({{order.email}})</span></td>
+            <td class="cell-price">${{order.total_price}}</td>
+            <td>
+              <select [(ngModel)]="order.shipping_status" class="status-select">
+                <option value="Pending">Pending</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Out for Delivery">Out for Delivery</option>
+                <option value="Delivered">Delivered</option>
+              </select>
+            </td>
+            <td>
+              <input type="text" [(ngModel)]="order.tracking_number" placeholder="Enter tracking..." class="tracking-input">
+            </td>
+            <td>
+              <button class="btn-primary btn-sm" (click)="updateOrder(order)">Update</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="orders.length === 0" class="empty-state">No orders found.</p>
+    </div>
+
+    <!-- ═══ PRODUCTS ═══ -->
+    <div *ngIf="currentView === 'products'" class="products-section">
+      <div class="section-header">
+        <h3 class="section-title">Product Catalog</h3>
+        <button class="btn-primary" (click)="changeView('add-product')">+ Add New Product</button>
+      </div>
+      <div class="product-admin-grid">
+        <div class="product-admin-card" *ngFor="let prod of products">
+          <div class="pac-image">
+            <img [src]="prod.image_url || 'assets/placeholder.png'" [alt]="prod.name">
+          </div>
+          <div class="pac-body">
+            <h4 class="pac-name">{{prod.name}}</h4>
+            <p class="pac-desc">{{prod.description | slice:0:80}}{{prod.description?.length > 80 ? '...' : ''}}</p>
+            <div class="pac-meta">
+              <span class="pac-price">${{prod.price}}</span>
+              <span class="pac-stock" [class.low]="prod.stock < 5">Stock: {{prod.stock}}</span>
+            </div>
+            <div class="pac-tags">
+              <span class="tag">{{prod.category}}</span>
+              <span class="tag">{{prod.activity}}</span>
+            </div>
+          </div>
+          <div class="pac-actions">
+            <button class="btn-edit" (click)="editProduct(prod)" title="Edit Product">✏️ Edit</button>
+            <button class="btn-delete" (click)="confirmDelete(prod)" title="Delete Product">🗑️ Delete</button>
+          </div>
+        </div>
+      </div>
+      <p *ngIf="products.length === 0" class="empty-state">No products in catalog. Add your first product!</p>
+    </div>
+
+    <!-- ═══ ADD / EDIT PRODUCT ═══ -->
+    <div *ngIf="currentView === 'add-product'" class="form-section">
+      <h3 class="section-title">{{editingProductId ? 'Edit Product' : 'Add New Product'}}</h3>
+      <form (submit)="saveProduct()" class="admin-form">
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" [(ngModel)]="productForm.name" name="name" placeholder="e.g. Alpine Explorer Tent" required>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="productForm.description" name="description" rows="4" placeholder="Describe this product..." required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" step="0.01" [(ngModel)]="productForm.price" name="price" required>
+          </div>
+          <div class="form-group">
+            <label>Stock Quantity</label>
+            <input type="number" [(ngModel)]="productForm.stock" name="stock" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category</label>
+            <select [(ngModel)]="productForm.category" name="category" required>
+              <option value="Tents">Tents</option>
+              <option value="Backpacks">Backpacks</option>
+              <option value="Supplies">Supplies</option>
+              <option value="Apparel">Apparel</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Activity</label>
+            <select [(ngModel)]="productForm.activity" name="activity" required>
+              <option value="Camping">Camping</option>
+              <option value="Hiking">Hiking</option>
+              <option value="Outdoor">Outdoor</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Image URL</label>
+          <input type="text" [(ngModel)]="productForm.image_url" name="image_url" (input)="onImageUrlChange()" placeholder="https://example.com/image.jpg">
+        </div>
+        <div class="image-preview" *ngIf="imagePreviewUrl">
+          <label>Image Preview</label>
+          <img [src]="imagePreviewUrl" alt="Preview" (error)="imagePreviewUrl = ''">
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="changeView('products')">Cancel</button>
+          <button type="submit" class="btn-primary">{{editingProductId ? 'Update Product' : 'Save Product'}}</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ═══ USERS ═══ -->
+    <div *ngIf="currentView === 'users'" class="users-section">
+      <h3 class="section-title">User Management</h3>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Joined</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td class="cell-id">{{user.id}}</td>
+            <td>{{user.username}}</td>
+            <td class="cell-email">{{user.email}}</td>
+            <td>
+              <span class="role-badge" [class.admin]="user.role === 'admin'" [class.user]="user.role === 'user'">
+                {{user.role}}
+              </span>
+            </td>
+            <td>{{user.created_at | date:'mediumDate'}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="users.length === 0" class="empty-state">No registered users.</p>
+    </div>
+
+  </main>
+</div>

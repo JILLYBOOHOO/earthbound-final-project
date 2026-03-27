@@ -1,0 +1,50 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="portal-toggle">
+      <button [class.active]="user.role === 'user'" type="button" (click)="setRole('user')">User</button>
+      <button [class.active]="user.role === 'admin'" type="button" (click)="setRole('admin')">Admin</button>
+    </div>
+
+    <div class="register-header">
+      <h2 class="register-title">{{ user.role === 'admin' ? 'New Admin' : 'New Explorer' }}</h2>
+      <p class="register-subtitle">Join the Earthbound community today</p>
+    </div>
+
+    <form (submit)="onRegister()" class="register-form">
+      <div class="input-group">
+        <label>Username</label>
+        <div class="input-wrapper">
+          <input type="text" placeholder="AdventurerName" [(ngModel)]="user.username" name="username" required>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Email Address</label>
+        <div class="input-wrapper">
+          <input type="email" placeholder="explorer@earthbound.com" [(ngModel)]="user.email" name="email" required>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <div class="input-wrapper">
+          <input type="password" placeholder="••••••••" [(ngModel)]="user.password" name="password" required>
+        </div>
+      </div>
+
+      <button type="submit" class="register-btn" [disabled]="loading">
+        <span *ngIf="!loading">Create Account</span>
+        <span class="loader" *ngIf="loading"></span>
+      </button>
+    </form>
+
+    <div class="register-footer">
+      <p class="login-link">Already a member? <a routerLink="/login">Sign In</a></p>
+    </div>
+  </div>
+
+  <div class="background-decor">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+</div>

@@ -1,0 +1,426 @@
+/* CSS Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Light theme variables */
+    --bg-color: #f9f9f9;
+    --text-color: #333;
+    --primary-color: #2a6e3f;
+    --secondary-color: #3a8b5c;
+    --accent-color: #f0b429;
+    --card-bg: #fff;
+    --header-bg: #fff;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --border-color: #e0e0e0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: all 0.3s ease;
+}
+
+.site-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Dark Mode Toggle */
+#dark-toggle {
+    display: none;
+}
+
+.dark-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    z-index: 100;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.dark-btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* Dark Mode Styles */
+#dark-toggle:checked ~ .site-wrapper {
+    --bg-color: #1a1a2e;
+    --text-color: #e6e6e6;
+    --primary-color: #4caf93;
+    --secondary-color: #3d8b74;
+    --card-bg: #16213e;
+    --header-bg: #0f3460;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --border-color: #2d4059;
+    background-color: #16213e;
+}
+
+#dark-toggle:checked ~ .dark-btn {
+    content: 'Light Mode';
+    background: var(--primary-color);
+}
+
+/* Header & Navigation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 0;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--header-bg);
+    margin-bottom: 40px;
+}
+
+.logo {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav a:hover {
+    color: var(--primary-color);
+    background-color: rgba(42, 110, 63, 0.1);
+}
+
+.nav a[aria-current="page"] {
+    color: white;
+    background-color: var(--primary-color);
+}
+
+.nav a[aria-current="page"]::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 16px;
+    right: 16px;
+    height: 2px;
+    background-color: var(--accent-color);
+}
+
+/* Main Content */
+main {
+    padding-bottom: 60px;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+}
+
+/* Products Grid - Side by Side Cards */
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 cards side by side on desktop */
+    gap: 25px;
+    margin-bottom: 60px;
+    align-items: stretch; /* Ensure all cards have same height */
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Make all cards same height */
+    border: 1px solid var(--border-color);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px var(--shadow);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    min-height: 42px; /* Consistent title height */
+}
+
+.description {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    flex-grow: 1;
+    min-height: 40px; /* Consistent description height */
+}
+
+#dark-toggle:checked ~ .site-wrapper .description {
+    color: #b0b0b0;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 10px 0;
+    min-height: 36px; /* Consistent price height */
+}
+
+.stars {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin: 8px 0;
+    min-height: 28px; /* Consistent stars height */
+}
+
+.card button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto; /* Push button to bottom of card */
+    font-size: 1rem;
+    width: 100%;
+}
+
+.card button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* Reviews Section - Also Side by Side */
+.reviews {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 reviews side by side on desktop */
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.review-card {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px var(--shadow);
+    border-left: 4px solid var(--accent-color);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+}
+
+.review-card p {
+    margin-bottom: 15px;
+    font-style: italic;
+    flex-grow: 1;
+}
+
+.review-card .stars {
+    margin-bottom: 15px;
+}
+
+.author {
+    font-weight: 600;
+    color: var(--primary-color);
+    display: block;
+    text-align: right;
+    margin-top: auto;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-size: 0.95rem;
+    background-color: var(--header-bg);
+    margin-top: 40px;
+}
+
+footer p {
+    margin-bottom: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+    .products {
+        grid-template-columns: repeat(2, 1fr); /* 2 cards side by side on tablet */
+        gap: 20px;
+    }
+    
+    .reviews {
+        grid-template-columns: repeat(2, 1fr); /* 2 reviews side by side on tablet */
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding-bottom: 20px;
+    }
+    
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .logo {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .products {
+        grid-template-columns: 1fr; /* Stack cards on mobile */
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .reviews {
+        grid-template-columns: 1fr; /* Stack reviews on mobile */
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-wrapper {
+        padding: 0 15px;
+    }
+    
+    .nav {
+        gap: 10px;
+    }
+    
+    .nav a {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .dark-btn {
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .card h3 {
+        font-size: 1.2rem;
+        min-height: auto;
+    }
+    
+    .description {
+        min-height: auto;
+    }
+}
+
+/* Accessibility Improvements */
+button:focus,
+a:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Animation for page load */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card, .review-card {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+.card:nth-child(4) { animation-delay: 0.3s; }
+.review-card:nth-child(2) { animation-delay: 0.4s; }
+.review-card:nth-child(3) { animation-delay: 0.5s; }
+
+/* Card Alignment Helper */
+.card, .review-card {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure all cards in a row are equal height */
+.products, .reviews {
+    align-items: stretch;
+}

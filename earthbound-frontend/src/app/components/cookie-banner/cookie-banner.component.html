@@ -1,0 +1,12 @@
+<div class="cookie-banner" *ngIf="!accepted">
+  <div class="container banner-inner">
+    <div class="banner-text">
+       <h3>🍪 Cookies & Privacy</h3>
+       <p>We use cookies to ensure you get the best experience on Earthbound. By continuing, you agree to our <a routerLink="/privacy">Privacy Notice</a>.</p>
+    </div>
+    <div class="banner-actions">
+      <button class="accept-btn" (click)="accept()">Accept All</button>
+      <button class="settings-btn">Settings</button>
+    </div>
+  </div>
+</div>

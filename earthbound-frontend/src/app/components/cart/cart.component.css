@@ -1,0 +1,50 @@
+.cart-page { padding: 2rem 0; }
+.cart-title { color: #fff; font-size: 2rem; margin-bottom: 2rem; }
+
+.cart-content { display: grid; grid-template-columns: 1fr 340px; gap: 2rem; }
+@media (max-width: 768px) { .cart-content { grid-template-columns: 1fr; } }
+
+.cart-item {
+  display: flex; align-items: center; gap: 1.2rem;
+  background: rgba(30, 30, 30, 0.9); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 1rem;
+}
+.item-image img { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; }
+.item-details h3 { color: #fff; font-size: 1rem; margin: 0; }
+.item-category { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin: 0.2rem 0 0; }
+.item-price { color: #ff9800; font-weight: 700; font-size: 1.1rem; margin-left: auto; }
+.remove-btn {
+  background: rgba(255,60,60,0.15); color: #ff4444; border: none;
+  border-radius: 50%; width: 32px; height: 32px; cursor: pointer;
+  font-size: 0.9rem; transition: background 0.3s;
+}
+.remove-btn:hover { background: rgba(255,60,60,0.3); }
+
+.cart-summary {
+  background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,152,0,0.15);
+  border-radius: 16px; padding: 2rem; height: fit-content;
+}
+.summary-row { display: flex; justify-content: space-between; color: #fff; padding: 0.6rem 0; }
+.summary-row.total { font-size: 1.3rem; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; }
+
+.checkout-btn {
+  width: 100%; padding: 0.9rem; margin-top: 1.5rem;
+  background: linear-gradient(135deg, #2e7d32, #43a047); color: #fff;
+  border: none; border-radius: 8px; font-size: 1rem; font-weight: 600;
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.3s;
+}
+.checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(46,125,50,0.4); }
+
+.clear-btn {
+  width: 100%; padding: 0.7rem; margin-top: 0.8rem;
+  background: transparent; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px; cursor: pointer; transition: color 0.3s;
+}
+.clear-btn:hover { color: #ff4444; border-color: rgba(255,60,60,0.3); }
+
+.empty-cart { text-align: center; padding: 4rem 0; color: rgba(255,255,255,0.5); }
+.shop-btn {
+  margin-top: 1rem; padding: 0.8rem 2rem;
+  background: linear-gradient(135deg, #2e7d32, #43a047); color: #fff;
+  border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
+}

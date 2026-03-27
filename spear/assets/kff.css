@@ -1,0 +1,345 @@
+/* Reset default margin and height */
+html,
+body {
+    margin: 20px;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    overflow-x: hidden;
+    background: radial-gradient(#00ff00, #003333);
+    /* background: radial-gradient(rgb(207, 122, 10), rgba(44, 199, 2, 0.966)); */
+}
+
+/* Container holding the content */
+.container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    z-index: 90;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 85px;
+    text-align: center;
+    margin: 0px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-shadow: #066906 12px 12px;
+    color: #fc6805f6;
+    padding: 2px;
+    z-index: 3;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    text-decoration: overline
+}
+
+h2 {
+    font-size: 30px;
+    text-align: center;
+    margin: 10px 0 20px 0;
+    font-family: 'Courier New', Courier, monospace;
+    color: #f0ebe8;
+    font-weight: bold;
+    padding: 10px;
+    z-index: 3;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 6px auto 0;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+button {
+    background-color: #000000;
+    color: #ffffff;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 25px;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 50px;
+}
+
+
+
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+
+button:hover,
+.home-btn:hover,
+.contaus-btn:hover,
+.checkout-btn:hover,
+.contactus-btn:hover {
+    background-color: #f0410c;
+    color: #f8f3f3;
+    border-radius: 50px;
+    transform: scale(1.05);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 13px;
+}
+
+
+
+.video-container {
+    position: relative;
+    /* stays in normal flow */
+    width: 50%;
+    /* half of parent/container width */
+    max-width: 800px;
+    /* optional limit */
+    margin: 50px auto;
+    /* centers horizontally with spacing */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    /* above background but below other overlays if needed */
+}
+
+video {
+    width: 80%;
+    /* fill container width */
+    height: auto;
+    /* maintain aspect ratio */
+    object-fit: cover;
+    /* crop to fill container nicely */
+    border-radius: 15px;
+    /* optional soft corners */
+    box-shadow: 0 0 20px rgba(2, 179, 233, 0.5);
+    display: block;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 14px;
+    z-index: 15;
+    height: 2.5px;
+}
+
+.footer p {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* ========== MEDIA QUERIES ========== */
+
+/* Tablets and smaller laptops */
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 50px;
+        text-shadow: 4px 5px rgb(25, 7, 126);
+    }
+
+    .button-container {
+        margin-top: 180px;
+        gap: 12px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        min-width: 120px;
+    }
+
+    .video-container {
+        width: 60%;
+    }
+
+    .bottom-left-image,
+    .bottom-right-image {
+        width: 100px;
+    }
+}
+
+/* Tablets in portrait mode */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 40px;
+        text-shadow: 3px 4px rgb(25, 7, 126);
+        padding: 8px;
+        margin: 5px 0 15px 0;
+    }
+
+    .button-container {
+        margin-top: 150px;
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        width: 200px;
+        min-width: 200px;
+        padding: 12px 0;
+        font-size: 1rem;
+    }
+
+    .video-container {
+        width: 70%;
+    }
+
+    video {
+        border-radius: 40%;
+    }
+
+    .bottom-left-image,
+    .bottom-right-image {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        width: 150px;
+        margin: 10px;
+        display: inline-block;
+    }
+
+    .container {
+        padding-bottom: 100px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 28px;
+        text-shadow: 2px 3px rgb(25, 7, 126);
+        border: 2px dashed;
+        padding: 6px;
+        margin: 5px 0 10px 0;
+    }
+
+    .button-container {
+        margin-top: 120px;
+        gap: 8px;
+    }
+
+    button {
+        width: 180px;
+        min-width: 180px;
+        padding: 10px 0;
+        font-size: 0.9rem;
+    }
+
+    .video-container {
+        width: 80%;
+    }
+
+    video {
+        border-radius: 30%;
+    }
+
+    .bottom-left-image,
+    .bottom-right-image {
+        width: 120px;
+        margin: 8px;
+    }
+
+    .footer {
+        font-size: 12px;
+        padding: 8px 0;
+    }
+
+    button:hover {
+        transform: scale(1.02);
+    }
+}
+
+/* Very small mobile devices */
+@media (max-width: 320px) {
+    h1 {
+        font-size: 24px;
+        text-shadow: 1px 2px rgb(25, 7, 126);
+    }
+
+    button {
+        width: 160px;
+        min-width: 160px;
+        font-size: 0.85rem;
+        padding: 8px 0;
+    }
+
+    .button-container {
+        margin-top: 100px;
+    }
+
+    .video-container {
+        width: 85%;
+    }
+
+    .bottom-left-image,
+    .bottom-right-image {
+        width: 100px;
+    }
+}
+
+/* Landscape orientation for mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+    h1 {
+        font-size: 32px;
+        margin: 5px 0;
+    }
+
+    .button-container {
+        margin-top: 100px;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    button {
+        width: 140px;
+        min-width: 140px;
+        padding: 8px 0;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .bottom-left-image,
+    .bottom-right-image {
+        width: 80px;
+        height: 100px;
+        margin: 8px;
+    }
+}

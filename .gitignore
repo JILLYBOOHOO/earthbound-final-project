@@ -1,0 +1,17 @@
+# Node.js
+**/node_modules/
+**/dist/
+**/.angular/
+
+# IDE files
+.vscode/
+
+# Environment variables
+**/.env
+
+# Build output
+build_output.txt
+
+# OS-specific files
+Thumbs.db
+.DS_Store

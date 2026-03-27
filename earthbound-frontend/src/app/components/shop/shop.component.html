@@ -1,0 +1,96 @@
+<div class="shop-page container">
+  <aside class="filters-panel">
+    <h2 class="filter-title">Filters</h2>
+    
+    <div class="filter-group">
+      <h4>Category</h4>
+      <select [value]="filters.category" (change)="onCategoryChange($event)">
+        <option value="">All Categories</option>
+        <option value="shelter">Shelter</option>
+        <option value="Snow">Snow</option>
+        <option value="Fishing">Fishing</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Hiking">Hiking</option>
+        <option value="Water">Water</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <h4>Activity</h4>
+      <select [value]="filters.activity" (change)="onActivityChange($event)">
+        <option value="">All Activities</option>
+        <option value="Camping">Camping</option>
+        <option value="Hiking">Hiking</option>
+        <option value="Outdoor">Outdoor</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <h4>Price Range</h4>
+      <div class="price-slider-container">
+        <span>Min: ${{filters.minPrice || 0}}</span>
+        <input type="range" min="0" max="10000" [value]="filters.minPrice" (change)="onMinPriceChange($event)" aria-label="Minimum Price Slider">
+        <span>Max: ${{filters.maxPrice || 10000}}</span>
+        <input type="range" min="0" max="10000" [value]="filters.maxPrice" (change)="onMaxPriceChange($event)" aria-label="Maximum Price Slider">
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h4>Sort By</h4>
+      <select [value]="filters.sort" (change)="onSortChange($event)">
+        <option value="">Newest</option>
+        <option value="price_asc">Price: Low to High</option>
+        <option value="price_desc">Price: High to Low</option>
+      </select>
+    </div>
+
+    <button class="clear-filters" (click)="clearFilters()">Clear All</button>
+
+
+  </aside>
+
+  <!-- PRODUCTS -->
+  <main class="products-area">
+    <h2 class="section-title">Outdoor Gear Collection</h2>
+
+    <section class="products" *ngIf="products.length > 0; else noProducts">
+      <article class="card" *ngFor="let product of products">
+        <div class="card-image-wrapper">
+          <img [src]="product.image_url || 'assets/placeholder.png'" [alt]="product.name">
+          <button class="wishlist-btn" (click)="addToWishlist(product)" aria-label="Add to Wishlist">❤️</button>
+        </div>
+        <div class="card-content">
+          <h3>{{ product.name }}</h3>
+          <p class="description">{{ product.description | slice:0:60 }}{{ product.description?.length > 60 ? '...' : '' }}</p>
+          <div class="product-info-row">
+            <p class="price">${{ product.price }}</p>
+            <p class="stars">★★★★★</p>
+          </div>
+          <button class="buy-now-btn" (click)="addToCart(product)">Add to Cart</button>
+        </div>
+      </article>
+    </section>
+
+    <ng-template #noProducts>
+      <div class="no-products">
+        <h3>No products found matching your criteria.</h3>
+        <button (click)="clearFilters()" class="clear-filters-btn">View All Products</button>
+      </div>
+    </ng-template>
+
+    <!-- CUSTOMER REVIEWS -->
+    <h2 class="section-title">Customer Reviews</h2>
+    <section class="reviews">
+      <article class="review-card">
+        <p class="stars">★★★★★</p>
+        <p>"The best quality outdoor gear I've ever purchased!"</p>
+        <span class="author">— Sarah M.</span>
+      </article>
+      <article class="review-card">
+        <p class="stars">★★★★★</p>
+        <p>"Fast delivery and premium products. Highly recommend."</p>
+        <span class="author">— Jason T.</span>
+      </article>
+    </section>
+  </main>
+</div>
