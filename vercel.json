@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "earthbound-backend/src/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "earthbound-frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/earthbound-frontend",
+        "buildCommand": "ng build"
+      }
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "earthbound-backend/src/index.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "earthbound-frontend/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

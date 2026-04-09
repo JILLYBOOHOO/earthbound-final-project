@@ -54,7 +54,11 @@ app.use((req, res) => {
 });
 
 // Initialize DB and Start
-initDB().then(() => {
+if (process.env.VITE_VERCEL_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
+  initDB().then(() => {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => console.log(`Backend and Production Frontend running on port ${PORT}`));
-});
+  });
+}
+
+module.exports = app;
