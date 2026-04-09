@@ -64,7 +64,7 @@
                   (click)="addToWishlist(product)" 
                   [class.active]="isInWishlist(product)"
                   aria-label="Toggle Wishlist">
-            <i [class]="isInWishlist(product) ? 'fas fa-heart' : 'far fa-heart'"></i>
+            <i [class]="isInWishlist(product) ? 'fas fa-heart' : 'far fa-heart'" aria-hidden="true"></i>
           </button>
         </div>
         <div class="card-content">

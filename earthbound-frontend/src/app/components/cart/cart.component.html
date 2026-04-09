@@ -25,13 +25,13 @@
           
           <div class="item-controls-group">
             <div class="cart-qty-selector">
-              <button class="cart-qty-btn" (click)="updateQuantity((item.product?.id || item.id), -1)">-</button>
+              <button class="cart-qty-btn" (click)="updateQuantity((item.product?.id || item.id), -1)" aria-label="Decrease quantity">-</button>
               <span class="cart-qty-val">{{ item.quantity || 1 }}</span>
-              <button class="cart-qty-btn" (click)="updateQuantity((item.product?.id || item.id), 1)">+</button>
+              <button class="cart-qty-btn" (click)="updateQuantity((item.product?.id || item.id), 1)" aria-label="Increase quantity">+</button>
             </div>
             
             <button class="remove-btn" (click)="removeItem((item.product?.id || item.id), (item.product?.name || item.name))" aria-label="Remove item">
-              <i class="fas fa-trash"></i>
+              <i class="fas fa-trash" aria-hidden="true"></i>
             </button>
           </div>
         </div>

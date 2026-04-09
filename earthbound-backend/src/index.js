@@ -12,15 +12,27 @@ app.use(compression());
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from Angular dist folder with 1-year cache
+// Maximize browser caching for static assets (images, fonts, scripts)
 const frontendDist = path.join(__dirname, '../../earthbound-frontend/dist/earthbound-frontend');
+
+// Dedicated assets caching
+app.use('/assets', express.static(path.join(frontendDist, 'assets'), {
+  maxAge: '1y',
+  immutable: true,
+  lastModified: false,
+  etag: true
+}));
+
+// Main static build files caching
 app.use(express.static(frontendDist, {
   maxAge: '1y',
   setHeaders: (res, file) => {
     if (file.endsWith('.html')) {
-      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate'); // Never cache index.html
-    } else {
-      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // Cache assets!
+      // index.html should never be cached to ensure users get the latest build
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+    } else if (file.match(/\.(js|css|woff2|webp|jpg|png|svg)$/)) {
+      // Fingerprinted JS/CSS and images should be cached for 1 year
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     }
   }
 }));

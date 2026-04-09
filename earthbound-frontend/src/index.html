@@ -12,6 +12,28 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="preconnect" href="https://images.unsplash.com">
   
+  <style>
+    :root {
+      --primary-color: #2a6e3f;
+      --secondary-color: #e8772e;
+      --bg-color: #ffffff;
+      --text-color: #1a1a1a;
+      --card-bg: #ffffff;
+      --border-color: #dddddd;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+    body { background: var(--bg-color); color: var(--text-color); margin: 0; font-family: 'Outfit', sans-serif; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; width: 100%; box-sizing: border-box; }
+    .navbar { background: var(--bg-color); border-bottom: 1px solid var(--border-color); padding: 1rem 0; position: fixed; top: 0; width: 100%; z-index: 1000; height: 75px; box-sizing: border-box; }
+    .logo { font-size: 1.8rem; font-weight: 800; color: var(--primary-color); text-decoration: none; }
+    .home-hero { height: 80vh; width: 100%; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #2a6e3f; margin-top: 75px; }
+    .hero-bg-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); z-index: 1; }
+    .hero-content { position: relative; z-index: 2; text-align: center; color: white; padding: 0 1rem; max-width: 800px; }
+    .hero-title { font-size: 5rem; font-weight: 900; margin-bottom: 1rem; line-height: 1.1; letter-spacing: -2px; }
+    @media (max-width: 900px) { .hero-title { font-size: 3rem; } .navbar { height: 120px; } .home-hero { margin-top: 120px; } }
+  </style>
+
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
