@@ -8,16 +8,29 @@
     <div class="cart-items-list">
       <div class="cart-item-card" *ngFor="let item of cartItems; let i = index">
         <div class="item-img">
-          <img [src]="item.image_url || 'assets/placeholder.png'" [alt]="item.name">
+          <img #cartImg
+               [src]="getCartItemImage(item)" 
+               [alt]="item.product?.name || item.name || 'Product'"
+               width="80"
+               height="80"
+               loading="lazy"
+               (error)="cartImg.src = 'assets/placeholder.png'">
         </div>
-        <div class="item-info">
+        <div class="item-info compact-info">
           <div class="item-meta">
-            <span class="category">{{item.category}}</span>
-            <h3 class="name">{{item.name}}</h3>
+            <span class="category">{{ (item.product?.category || item.category) || 'Gear' }}</span>
+            <h3 class="name">{{ item.product?.name || item.name }}</h3>
+            <span class="price-val-inline">${{ ((item.product?.price || item.price) * (item.quantity || 1)).toFixed(2) }}</span>
           </div>
-          <div class="item-price-bin">
-            <span class="price-val">${{item.price}}</span>
-            <button class="remove-btn" (click)="removeItem(i)" aria-label="Remove item">
+          
+          <div class="item-controls-group">
+            <div class="cart-qty-selector">
+              <button class="cart-qty-btn" (click)="updateQuantity((item.product?.id || item.id), -1)">-</button>
+              <span class="cart-qty-val">{{ item.quantity || 1 }}</span>
+              <button class="cart-qty-btn" (click)="updateQuantity((item.product?.id || item.id), 1)">+</button>
+            </div>
+            
+            <button class="remove-btn" (click)="removeItem((item.product?.id || item.id), (item.product?.name || item.name))" aria-label="Remove item">
               <i class="fas fa-trash"></i>
             </button>
           </div>
@@ -40,7 +53,7 @@
           <span>Total</span>
           <span>${{total.toFixed(2)}}</span>
         </div>
-        <button class="checkout-btn premium-btn">
+        <button class="checkout-btn premium-btn" (click)="checkout()">
           Checkout Now <i class="fas fa-arrow-right"></i>
         </button>
         <button class="clear-btn" (click)="clearCart()">Clear Cart</button>

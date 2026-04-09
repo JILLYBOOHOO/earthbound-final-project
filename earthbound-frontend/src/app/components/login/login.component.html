@@ -6,36 +6,45 @@
     </div>
 
     <div class="login-header">
-      <h2 class="login-title">{{ portalType === 'admin' ? 'Admin Gateway' : 'User Account' }}</h2>
+      <h2 class="login-title">{{ portalType === 'admin' ? 'Admin Portal' : 'User Account' }}</h2>
       <p class="login-subtitle">Sign in to the Earthbound {{ portalType }} portal</p>
     </div>
 
     <form (submit)="onLogin()" class="login-form">
       <div class="input-group">
-        <label>Email Address</label>
+        <label for="email-input">Email Address</label>
         <div class="input-wrapper">
-          <i class="fas fa-envelope"></i>
-          <input type="email" placeholder="email@earthbound.com" [(ngModel)]="credentials.email" name="email" required>
+          <i class="fas fa-envelope" aria-hidden="true"></i>
+          <input id="email-input" type="email" placeholder="email@earthbound.com" [(ngModel)]="credentials.email" name="email" required aria-required="true">
         </div>
       </div>
       
       <div class="input-group">
-        <label>Password</label>
+        <label for="password-input">Password</label>
         <div class="input-wrapper">
-          <i class="fas fa-lock"></i>
-          <input type="password" placeholder="••••••••" [(ngModel)]="credentials.password" name="password" required>
+          <i class="fas fa-lock" aria-hidden="true"></i>
+          <input id="password-input" type="password" placeholder="••••••••" [(ngModel)]="credentials.password" name="password" required aria-required="true">
         </div>
       </div>
 
+      <div class="login-options">
+        <label class="remember-me">
+          <input type="checkbox" [(ngModel)]="credentials.rememberMe" name="rememberMe">
+          <span class="checkbox-custom"></span>
+          Remember Me
+        </label>
+        <a href="#" class="forgot-password">Forgot Password?</a>
+      </div>
+
       <button type="submit" class="login-btn" [disabled]="loading">
-        <span *ngIf="!loading">Launch Portal</span>
+        <span *ngIf="!loading">Login</span>
         <span class="loader" *ngIf="loading"></span>
       </button>
     </form>
 
     <div class="login-footer">
       <p class="register-link" *ngIf="portalType === 'user'">
-        New explorer? <a routerLink="/register">Create Account</a>
+        New explorer? <a [routerLink]="['/register']" [queryParams]="{returnUrl: route.snapshot.queryParams['returnUrl']}">Create Account</a>
       </p>
       <p class="admin-notice" *ngIf="portalType === 'admin'">
         Authorized access only. Log monitoring active.

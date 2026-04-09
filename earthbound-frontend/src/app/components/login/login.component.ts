@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -10,12 +10,13 @@ import { ToastService } from '../../services/toast.service';
 })
 export class LoginComponent {
   portalType: 'user' | 'admin' = 'user';
-  credentials: any = { email: '', password: '' };
+  credentials: any = { email: '', password: '', rememberMe: false };
   loading: boolean = false;
 
   constructor(
     private authService: AuthService, 
     private router: Router,
+    public route: ActivatedRoute,
     private toastService: ToastService
   ) { }
 
@@ -36,9 +37,17 @@ export class LoginComponent {
           return;
         }
 
-        this.toastService.success('Welcome back!');
-        if (res.role === 'admin') this.router.navigate(['/admin']);
-        else this.router.navigate(['/shop']);
+        const displayName = res.username || res.name || 'Explorer';
+        this.toastService.success(`Hey Welcome ${displayName}`);
+        const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+        
+        if (returnUrl) {
+          this.router.navigateByUrl(returnUrl);
+        } else if (res.role === 'admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/shop']);
+        }
       },
       error: (err) => {
         this.loading = false;

@@ -1,6 +1,11 @@
+<a href="#main-content" class="skip-link">Skip to content</a>
 <app-navbar></app-navbar>
 
-<main class="page-content">
+<div class="welcome-bar container" *ngIf="isLoggedIn">
+  <span class="welcome-greeting">Hey Welcome, <span class="user-name">{{userName}}</span></span>
+</div>
+
+<main id="main-content" class="page-content" tabindex="-1">
   <router-outlet></router-outlet>
 </main>
 

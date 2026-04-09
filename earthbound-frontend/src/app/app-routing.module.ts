@@ -11,10 +11,12 @@ import { UserDashboardComponent } from './components/user-dashboard/user-dashboa
 import { BlogComponent } from './components/blog/blog.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { SupportComponent } from './components/support/support.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'shop', component: ShopComponent },
+  { path: 'shop', loadComponent: () => import('./components/shop/shop.component').then(m => m.ShopComponent) },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'cart', component: CartComponent },
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'blog', component: BlogComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'wishlist', component: WishlistComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'support', component: SupportComponent },
   { path: '**', redirectTo: '' }
 ];
 

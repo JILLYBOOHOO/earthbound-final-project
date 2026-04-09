@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
-import { ShopComponent } from './components/shop/shop.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
@@ -20,6 +19,8 @@ import { BlogComponent } from './components/blog/blog.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { ToastComponent } from './components/toast/toast.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { SupportComponent } from './components/support/support.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,6 @@ import { ToastComponent } from './components/toast/toast.component';
     NavbarComponent,
     FooterComponent,
     HomeComponent,
-    ShopComponent,
     LoginComponent,
     RegisterComponent,
     AdminDashboardComponent,
@@ -37,7 +37,9 @@ import { ToastComponent } from './components/toast/toast.component';
     BlogComponent,
     ContactComponent,
     WishlistComponent,
-    ToastComponent
+    ToastComponent,
+    CheckoutComponent,
+    SupportComponent
   ],
   imports: [
     BrowserModule,

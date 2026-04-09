@@ -28,8 +28,6 @@
     <div class="filter-group">
       <h4>Price Range</h4>
       <div class="price-slider-container">
-        <span>Min: ${{filters.minPrice || 0}}</span>
-        <input type="range" min="0" max="10000" [value]="filters.minPrice" (change)="onMinPriceChange($event)" aria-label="Minimum Price Slider">
         <span>Max: ${{filters.maxPrice || 10000}}</span>
         <input type="range" min="0" max="10000" [value]="filters.maxPrice" (change)="onMaxPriceChange($event)" aria-label="Maximum Price Slider">
       </div>
@@ -51,22 +49,44 @@
 
   <!-- PRODUCTS -->
   <main class="products-area">
-    <h2 class="section-title">Outdoor Gear Collection</h2>
+    <div class="shop-header">
+      <h2 class="section-title">Outdoor Gear Collection</h2>
+    </div>
 
     <section class="products" *ngIf="products.length > 0; else noProducts">
       <article class="card" *ngFor="let product of products">
         <div class="card-image-wrapper">
-          <img [src]="product.image_url || 'assets/placeholder.png'" [alt]="product.name">
-          <button class="wishlist-btn" (click)="addToWishlist(product)" aria-label="Add to Wishlist">❤️</button>
+          <img [src]="product.image_url || 'assets/placeholder.png'" 
+               [alt]="product.name"
+               loading="lazy"
+               fetchpriority="low">
+          <button class="wishlist-btn" 
+                  (click)="addToWishlist(product)" 
+                  [class.active]="isInWishlist(product)"
+                  aria-label="Toggle Wishlist">
+            <i [class]="isInWishlist(product) ? 'fas fa-heart' : 'far fa-heart'"></i>
+          </button>
         </div>
         <div class="card-content">
           <h3>{{ product.name }}</h3>
-          <p class="description">{{ product.description | slice:0:60 }}{{ product.description?.length > 60 ? '...' : '' }}</p>
+          <p class="description">{{ product.description | slice:0:60 }}{{ (product.description?.length ?? 0) > 60 ? '...' : '' }}</p>
           <div class="product-info-row">
             <p class="price">${{ product.price }}</p>
             <p class="stars">★★★★★</p>
           </div>
-          <button class="buy-now-btn" (click)="addToCart(product)">Add to Cart</button>
+          <div class="quantity-selector">
+            <button class="qty-btn" (click)="decreaseQuantity(product)" aria-label="Decrease quantity">-</button>
+            <span class="qty-display">{{ product.quantity || 1 }}</span>
+            <button class="qty-btn" (click)="increaseQuantity(product)" aria-label="Increase quantity">+</button>
+          </div>
+          <div class="purchase-actions">
+            <button class="buy-now-btn" (click)="addToCart(product)">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
+            <button class="instant-buy-btn" (click)="buyNow(product)">
+              Buy Now
+            </button>
+          </div>
         </div>
       </article>
     </section>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { ToastService } from '../../services/toast.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +15,9 @@ export class CartComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -24,17 +28,38 @@ export class CartComponent implements OnInit {
   }
 
   calculateTotal() {
-    this.total = this.cartItems.reduce((sum: number, item: any) => sum + parseFloat(item.price || 0), 0);
+    this.total = this.cartService.total;
   }
 
-  removeItem(index: number) {
-    const item = this.cartItems[index];
-    this.cartService.removeFromCart(index);
-    this.toastService.info(`${item.name} removed from cart.`);
+  updateQuantity(productId: number, delta: number) {
+    this.cartService.updateQuantity(productId, delta);
+  }
+
+  removeItem(productId: number, name: string) {
+    this.cartService.removeProduct(productId);
+    this.toastService.info(`${name} removed from cart.`);
   }
 
   clearCart() {
     this.cartService.clearCart();
     this.toastService.info('Cart cleared.');
+  }
+
+  checkout() {
+    if (this.cartItems.length === 0) return;
+    
+    if (!this.authService.isLoggedIn()) {
+      const proceed = window.confirm('Would you like to log in or sign up to complete your order?');
+      if (proceed) {
+        this.router.navigate(['/login'], { queryParams: { returnUrl: '/checkout' } });
+      }
+      return;
+    }
+
+    this.router.navigate(['/checkout']);
+  }
+
+  getCartItemImage(item: any): string {
+    return item.product?.image_url || item.image_url || 'assets/placeholder.png';
   }
 }

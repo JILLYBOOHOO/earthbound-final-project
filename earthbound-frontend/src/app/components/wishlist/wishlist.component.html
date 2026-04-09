@@ -3,15 +3,19 @@
 
   <div *ngIf="wishlistItems.length > 0; else emptyWishlist" class="wishlist-grid">
     <div class="wishlist-card" *ngFor="let item of wishlistItems; let i = index">
+      <button class="remove-icon" (click)="removeItem(i)" title="Remove item">×</button>
       <div class="wishlist-image">
-        <img [src]="item.image_url || 'assets/placeholder.png'" [alt]="item.name">
+        <img #wishImg 
+             [src]="item.image_url?.startsWith('/') ? item.image_url : '/' + (item.image_url || 'assets/placeholder.png')" 
+             [alt]="item.name || 'Product Image'"
+             (error)="wishImg.src = '/assets/placeholder.png'">
       </div>
       <div class="wishlist-info">
-        <h3>{{item.name}}</h3>
-        <p class="wishlist-price">${{item.price}}</p>
+        <h3>{{item.name || 'Premium Item'}}</h3>
+        <p class="wishlist-price">${{(item.price || 0).toFixed(2)}}</p>
         <div class="wishlist-actions">
           <button class="cart-btn" (click)="addToCart(item)">Add to Cart</button>
-          <button class="remove-btn" (click)="removeItem(i)">Remove</button>
+          <button class="view-btn" (click)="viewProduct(item)">View</button>
         </div>
       </div>
     </div>

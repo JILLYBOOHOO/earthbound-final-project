@@ -40,17 +40,18 @@
 .admin-dashboard-container {
   display: flex;
   min-height: 100vh;
-  background: #0d0d0d;
+  background: var(--bg-color);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #fff;
+  color: var(--text-color);
+  transition: all 0.3s ease;
 }
 
 /* ─── Sidebar ─── */
 .admin-sidebar {
   width: 260px;
   min-width: 260px;
-  background: linear-gradient(180deg, #141414 0%, #0a0a0a 100%);
-  border-right: 1px solid rgba(255,255,255,0.06);
+  background: var(--card-bg);
+  border-right: 1px solid var(--border-color);
   padding: 2rem 1.2rem;
   display: flex;
   flex-direction: column;
@@ -61,31 +62,55 @@
 }
 .brand-icon { font-size: 1.6rem; }
 .admin-title {
-  font-size: 1.2rem; font-weight: 700; color: #ff9800;
+  font-size: 1.2rem; font-weight: 700; color: #1e4620;
   margin: 0; letter-spacing: 0.5px;
 }
 .admin-nav { display: flex; flex-direction: column; gap: 0.4rem; }
 .admin-nav button {
-  background: transparent; color: rgba(255,255,255,0.55);
+  background: transparent; color: var(--text-color);
+  opacity: 0.7;
   border: none; padding: 0.85rem 1rem; text-align: left;
   font-size: 0.95rem; font-weight: 600; cursor: pointer;
   border-radius: 10px; transition: all 0.25s ease;
   display: flex; align-items: center; gap: 0.8rem;
 }
-.admin-nav button:hover { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.85); }
+.admin-nav button:hover { 
+  background: var(--border-color); 
+  color: #1e4620; 
+  opacity: 1;
+}
 .admin-nav button.active {
-  background: rgba(255,152,0,0.12); color: #ff9800;
-  border-left: 3px solid #ff9800;
+  background: rgba(30, 70, 32, 0.1); color: #1e4620;
+  border-left: 3px solid #1e4620;
 }
 .nav-icon { font-size: 1.1rem; width: 24px; text-align: center; }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.theme-toggle-btn {
+  width: 100%;
+  background: rgba(30, 70, 32, 0.05) !important;
+  color: #1e4620 !important;
+  opacity: 1 !important;
+  border: 1px dashed #1e4620 !important;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(30, 70, 32, 0.1) !important;
+  transform: scale(1.02);
+}
 
 /* ─── Main ─── */
 .admin-main {
   flex: 1; padding: 2.5rem 3rem; overflow-y: auto;
-  background: linear-gradient(135deg, #0d0d0d 0%, #111 100%);
+  background: var(--bg-color);
 }
 .section-title {
-  font-size: 1.8rem; font-weight: 800; color: #fff;
+  font-size: 1.8rem; font-weight: 800; color: var(--text-color);
   margin-bottom: 1.8rem; letter-spacing: -0.3px;
 }
 .sub-title { font-size: 1.2rem; color: rgba(255,255,255,0.7); margin: 2rem 0 1rem; font-weight: 600; }
@@ -108,8 +133,16 @@
 .users-stat .stat-icon   { background: rgba(33,150,243,0.15); }
 .revenue-stat .stat-icon { background: rgba(156,39,176,0.15); }
 .stat-info { display: flex; flex-direction: column; }
-.stat-value { font-size: 1.6rem; font-weight: 800; color: #fff; }
-.stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+.stat-value { font-size: 1.6rem; font-weight: 800; color: var(--text-color); }
+.stat-label { 
+  font-size: 0.8rem; 
+  color: var(--text-color); 
+  opacity: 0.9; 
+  font-weight: 700;
+  text-transform: uppercase; 
+  letter-spacing: 0.5px; 
+  margin-top: 2px; 
+}
 
 /* ─── Recent Orders ─── */
 .recent-orders { background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); overflow: hidden; }
@@ -119,8 +152,8 @@
 }
 .order-row:hover { background: rgba(255,255,255,0.02); }
 .order-row:last-child { border-bottom: none; }
-.order-id { color: #ff9800; font-weight: 700; min-width: 60px; }
-.order-customer { flex: 1; color: rgba(255,255,255,0.75); }
+.order-id { color: #1e4620; font-weight: 700; min-width: 60px; }
+.order-customer { flex: 1; color: var(--text-color); opacity: 0.9; }
 .order-total { color: #43a047; font-weight: 700; min-width: 80px; }
 .order-badge {
   padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.78rem;
@@ -138,23 +171,24 @@
   overflow: hidden; border: 1px solid rgba(255,255,255,0.06);
 }
 .admin-table th {
-  background: rgba(255,255,255,0.04); padding: 1rem 1.2rem;
-  text-align: left; font-weight: 700; color: rgba(255,255,255,0.6);
+  background: var(--card-bg); padding: 1rem 1.2rem;
+  text-align: left; font-weight: 700; color: var(--text-color);
+  opacity: 0.7;
   font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;
 }
 .admin-table td {
-  padding: 1rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.04);
-  vertical-align: middle; color: rgba(255,255,255,0.8);
+  padding: 1rem 1.2rem; border-bottom: 1px solid var(--border-color);
+  vertical-align: middle; color: var(--text-color);
 }
 .admin-table tr:hover td { background: rgba(255,255,255,0.02); }
-.cell-id { color: #ff9800; font-weight: 700; }
+.cell-id { color: #1e4620; font-weight: 700; }
 .cell-email { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
 .cell-price { color: #43a047; font-weight: 700; }
 
 .status-select, .tracking-input {
   padding: 0.5rem 0.7rem; border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
-  color: #fff; font-size: 0.9rem; width: 100%;
+  border: 1px solid var(--border-color); background: var(--card-bg);
+  color: var(--text-color); font-size: 0.9rem; width: 100%;
 }
 .status-select option { background: #1e1e1e; color: #fff; }
 
@@ -202,24 +236,29 @@
 
 /* ─── Form ─── */
 .admin-form {
-  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  background: var(--card-bg); border: 1px solid var(--border-color);
   padding: 2.5rem; border-radius: 16px; max-width: 720px;
 }
 .form-group { margin-bottom: 1.4rem; }
 .form-group label {
-  display: block; font-weight: 600; color: rgba(255,255,255,0.7);
+  display: block; font-weight: 600; color: var(--text-color);
   margin-bottom: 0.5rem; font-size: 0.9rem;
+  opacity: 0.85;
 }
 .form-group input, .form-group textarea, .form-group select {
   width: 100%; padding: 0.8rem 1rem; border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04);
-  color: #fff; font-size: 0.95rem; transition: border-color 0.3s;
+  border: 1px solid var(--border-color); background: var(--bg-color);
+  color: var(--text-color); font-size: 0.95rem; transition: border-color 0.3s;
   box-sizing: border-box;
 }
-.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-  outline: none; border-color: #ff9800;
+.form-group input::placeholder, .form-group textarea::placeholder {
+  color: var(--text-color);
+  opacity: 0.5;
 }
-.form-group select option { background: #1e1e1e; color: #fff; }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+  border-color: var(--primary-color);
+}
+.form-group select option { background: var(--card-bg); color: var(--text-color); }
 .form-group textarea { resize: vertical; min-height: 100px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 

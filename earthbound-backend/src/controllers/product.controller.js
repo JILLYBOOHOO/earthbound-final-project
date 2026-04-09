@@ -3,16 +3,12 @@ const pool = require('../config/db');
 exports.getAll = async (req, res) => {
     try {
         const { search, activity, category, minPrice, maxPrice, sort } = req.query;
-        let query = 'SELECT * FROM products WHERE 1=1';
+        let query = "SELECT product_ID as id, product_name as name, description, price, image as image_url, category, '' as activity FROM products WHERE 1=1";
         const params = [];
 
         if (search) {
-            query += ' AND (name LIKE ? OR description LIKE ?)';
+            query += ' AND (product_name LIKE ? OR description LIKE ?)';
             params.push(`%${search}%`, `%${search}%`);
-        }
-        if (activity) {
-            query += ' AND activity = ?';
-            params.push(activity);
         }
         if (category) {
             query += ' AND category = ?';
@@ -42,7 +38,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
     try {
-        const [products] = await pool.query('SELECT * FROM products WHERE id = ?', [req.params.id]);
+        const [products] = await pool.query("SELECT product_ID as id, product_name as name, description, price, image as image_url, category, '' as activity FROM products WHERE product_ID = ?", [req.params.id]);
         if (products.length === 0) return res.status(404).json({ message: 'Product not found' });
         res.status(200).json(products[0]);
     } catch (err) {
@@ -54,8 +50,8 @@ exports.create = async (req, res) => {
     try {
         const { name, description, price, category, activity, image_url, stock } = req.body;
         const [result] = await pool.execute(
-            'INSERT INTO products (name, description, price, category, activity, image_url, stock) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [name, description, price, category, activity, image_url, stock]
+            'INSERT INTO products (product_name, description, price, category, image, quantity) VALUES (?, ?, ?, ?, ?, ?)',
+            [name, description, price, category, image_url, stock]
         );
         res.status(201).json({ id: result.insertId, name, price });
     } catch (err) {
@@ -67,8 +63,8 @@ exports.update = async (req, res) => {
     try {
         const { name, description, price, category, activity, image_url, stock } = req.body;
         await pool.execute(
-            'UPDATE products SET name=?, description=?, price=?, category=?, activity=?, image_url=?, stock=? WHERE id=?',
-            [name, description, price, category, activity, image_url, stock, req.params.id]
+            'UPDATE products SET product_name=?, description=?, price=?, category=?, image=?, quantity=? WHERE product_ID=?',
+            [name, description, price, category, image_url, stock, req.params.id]
         );
         res.status(200).json({ message: 'Product updated' });
     } catch (err) {
@@ -78,7 +74,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        await pool.execute('DELETE FROM products WHERE id = ?', [req.params.id]);
+        await pool.execute('DELETE FROM products WHERE product_ID = ?', [req.params.id]);
         res.status(200).json({ message: 'Product deleted' });
     } catch (err) {
         res.status(500).json({ error: err.message });

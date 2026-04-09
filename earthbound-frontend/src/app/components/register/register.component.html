@@ -12,23 +12,23 @@
 
     <form (submit)="onRegister()" class="register-form">
       <div class="input-group">
-        <label>Username</label>
+        <label for="username-input">Username</label>
         <div class="input-wrapper">
-          <input type="text" placeholder="AdventurerName" [(ngModel)]="user.username" name="username" required>
+          <input id="username-input" type="text" placeholder="AdventurerName" [(ngModel)]="user.username" name="username" required aria-required="true">
         </div>
       </div>
 
       <div class="input-group">
-        <label>Email Address</label>
+        <label for="email-input">Email Address</label>
         <div class="input-wrapper">
-          <input type="email" placeholder="explorer@earthbound.com" [(ngModel)]="user.email" name="email" required>
+          <input id="email-input" type="email" placeholder="explorer@earthbound.com" [(ngModel)]="user.email" name="email" required aria-required="true">
         </div>
       </div>
 
       <div class="input-group">
-        <label>Password</label>
+        <label for="password-input">Password</label>
         <div class="input-wrapper">
-          <input type="password" placeholder="••••••••" [(ngModel)]="user.password" name="password" required>
+          <input id="password-input" type="password" placeholder="••••••••" [(ngModel)]="user.password" name="password" required aria-required="true">
         </div>
       </div>
 
@@ -39,7 +39,7 @@
     </form>
 
     <div class="register-footer">
-      <p class="login-link">Already a member? <a routerLink="/login">Sign In</a></p>
+      <p class="login-link">Already a member? <a [routerLink]="['/login']" [queryParams]="{returnUrl: route.snapshot.queryParams['returnUrl']}">Sign In</a></p>
     </div>
   </div>
 

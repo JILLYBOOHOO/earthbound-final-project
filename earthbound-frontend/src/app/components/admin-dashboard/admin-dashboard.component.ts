@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { OrderService } from '../../services/order.service';
 import { AuthService } from '../../services/auth.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -32,8 +33,17 @@ export class AdminDashboardComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private themeService: ThemeService
   ) { }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
+  }
+
+  isDarkMode() {
+    return this.themeService.isDarkMode();
+  }
 
   ngOnInit() {
     this.fetchAll();

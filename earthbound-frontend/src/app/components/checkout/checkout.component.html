@@ -1,0 +1,150 @@
+<div class="success-overlay" *ngIf="showSuccess">
+  <div class="success-card">
+    <div class="success-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h2>Payment Successful!</h2>
+    <p>Your expedition gear is being prepared.</p>
+    <div class="order-number">
+      <span>Order ID:</span>
+      <strong>{{successOrderId}}</strong>
+    </div>
+    <p class="redirect-msg">Routing you to your dashboard...</p>
+    <div class="progress-bar-container">
+       <div class="progress-bar-fill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="checkout-page container">
+  <div class="checkout-grid">
+    <!-- MAIN FLOW: SHIPPING & PAYMENT -->
+    <div class="checkout-main">
+      <div class="checkout-header">
+        <h2 class="welcome-greeting" *ngIf="userName">Hey Welcome, {{userName}}</h2>
+        <h1 class="checkout-title">Checkout</h1>
+      </div>
+      
+      <div class="checkout-section">
+        <h3 class="section-title"><span class="step-num">1</span> Shipping Details</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="firstName" autocomplete="given-name" placeholder="John" [(ngModel)]="shippingDetails.firstName">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="lastName" autocomplete="family-name" placeholder="Doe" [(ngModel)]="shippingDetails.lastName">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Address Line 1</label>
+          <input type="text" name="address1" autocomplete="address-line1" placeholder="123 Adventure Way" [(ngModel)]="shippingDetails.address1">
+        </div>
+        <div class="form-group">
+          <label>Address Line 2</label>
+          <input type="text" name="address2" autocomplete="address-line2" placeholder="Apt, Suite, Bldg. (Optional)" [(ngModel)]="shippingDetails.address2">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" name="city" autocomplete="address-level2" placeholder="City" [(ngModel)]="shippingDetails.city">
+          </div>
+          <div class="form-group">
+            <label>State</label>
+            <input type="text" name="state" autocomplete="address-level1" placeholder="State" [(ngModel)]="shippingDetails.state">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Zip Code</label>
+          <input type="text" name="zip" autocomplete="postal-code" placeholder="ZIP" [(ngModel)]="shippingDetails.zip">
+        </div>
+      </div>
+
+      <div class="checkout-section">
+        <h3 class="section-title"><span class="step-num">2</span> Payment Method</h3>
+        
+        <div class="payment-methods">
+          <button class="method-card" [class.active]="paymentMethod === 'card'" (click)="setPaymentMethod('card')">
+            <i class="fas fa-credit-card"></i>
+            <span>Credit Card</span>
+          </button>
+          <button class="method-card" [class.active]="paymentMethod === 'paypal'" (click)="setPaymentMethod('paypal')">
+            <i class="fab fa-paypal"></i>
+            <span>PayPal</span>
+          </button>
+        </div>
+
+        <!-- CARD FORM -->
+        <div class="payment-form" *ngIf="paymentMethod === 'card'">
+          <div class="form-group">
+            <label>Card Number</label>
+            <div class="input-with-icon">
+              <i class="far fa-credit-card"></i>
+              <input type="text" name="cardNumber" autocomplete="cc-number" placeholder="0000 0000 0000 0000" [(ngModel)]="cardDetails.number">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Expiration</label>
+              <input type="text" name="cardExpiry" autocomplete="cc-exp" placeholder="MM / YY" [(ngModel)]="cardDetails.expiry">
+            </div>
+            <div class="form-group">
+              <label>CVV</label>
+              <input type="password" name="cardCvv" autocomplete="cc-csc" placeholder="***" [(ngModel)]="cardDetails.cvv">
+            </div>
+          </div>
+          <p class="test-card-hint">Use 4242 4242... for test payments</p>
+        </div>
+
+        <!-- PAYPAL PLACEHOLDER -->
+        <div class="paypal-gate" *ngIf="paymentMethod === 'paypal'">
+          <div class="paypal-box">
+             <i class="fab fa-paypal"></i>
+             <p>You will be redirected to PayPal to complete your purchase securely.</p>
+             <button class="paypal-login-btn" (click)="processPayment()">Log in with PayPal</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="place-order-btn" (click)="processPayment()" [disabled]="loading">
+        <span *ngIf="!loading">Complete Pack Checkout</span>
+        <span class="loader" *ngIf="loading"></span>
+      </button>
+    </div>
+
+    <!-- RIGHT SIDE: ORDER SUMMARY -->
+    <div class="checkout-sidebar">
+      <div class="order-summary">
+        <h3>Pack Summary</h3>
+        <div class="item-mini-list">
+          <div class="item-mini" *ngFor="let item of cartItems">
+            <img [src]="item.product?.image_url || '/assets/placeholder.png'" 
+                 [alt]="item.product?.name"
+                 loading="lazy">
+            <div class="mini-info">
+              <p class="mini-name">{{ item.product?.name || item.name }}</p>
+              <p class="mini-qty">Qty: {{ item.quantity || 1 }}</p>
+            </div>
+            <span class="mini-price">${{ ((item.product?.price || item.price) * (item.quantity || 1)).toFixed(2) }}</span>
+          </div>
+        </div>
+        
+        <div class="summary-totals">
+          <div class="total-row">
+            <span>Subtotal</span>
+            <span>${{ total.toFixed(2) }}</span>
+          </div>
+          <div class="total-row">
+            <span>Shipping</span>
+            <span class="free">FREE</span>
+          </div>
+          <div class="total-row grand-total">
+            <span>Total</span>
+            <span>${{ total.toFixed(2) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

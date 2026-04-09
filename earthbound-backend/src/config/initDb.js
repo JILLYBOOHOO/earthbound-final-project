@@ -46,9 +46,14 @@ const initDB = async () => {
             FOREIGN KEY (user_id) REFERENCES users(id)
         )`);
 
+        // Check if orders.id is INT before creating order_items
+        const [orderCols] = await connection.query('DESCRIBE orders');
+        const idCol = orderCols.find(col => col.Field === 'id');
+        const orderIdType = idCol.Type.includes('int') ? 'INT' : 'VARCHAR(50)';
+
         await connection.query(`CREATE TABLE IF NOT EXISTS order_items (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            order_id INT,
+            order_id ${orderIdType},
             product_id INT,
             quantity INT,
             price DECIMAL(10, 2),

@@ -1,0 +1,59 @@
+<div class="support-wrapper">
+  <div class="support-container container">
+    <header class="support-header">
+      <h1>Mission Support Center</h1>
+      <p>Everything you need to know about your Earthbound expedition.</p>
+    </header>
+
+    <div class="support-grid">
+      <!-- POLICY SECTIONS -->
+      <aside class="support-nav">
+        <section class="policy-card">
+          <i class="fas fa-shipping-fast"></i>
+          <h3>Shipping Info</h3>
+          <p>Global logistics for your next adventure.</p>
+          <ul>
+            <li>Free shipping on orders over $150</li>
+            <li>Carbon-neutral delivery options</li>
+            <li>Real-time mission tracking</li>
+          </ul>
+        </section>
+
+        <section class="policy-card">
+          <i class="fas fa-undo-alt"></i>
+          <h3>Refund Policy</h3>
+          <p>Gear that works, or your money back.</p>
+          <ul>
+            <li>30-day return window</li>
+            <li>Easy, hassle-free labels</li>
+            <li>Full item reimbursement</li>
+          </ul>
+        </section>
+      </aside>
+
+      <!-- FAQ SECTION -->
+      <main class="support-content">
+        <section class="faq-section">
+          <h2>Frequently Asked Questions</h2>
+          <div class="faq-list">
+            <div class="faq-item" *ngFor="let faq of faqs; let i = index" [class.open]="faq.open">
+              <button class="faq-question" (click)="toggleFaq(i)">
+                <span>{{ faq.question }}</span>
+                <i class="fas" [class.fa-plus]="!faq.open" [class.fa-minus]="faq.open"></i>
+              </button>
+              <div class="faq-answer">
+                <p>{{ faq.answer }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="contact-cta">
+          <h2>Still have questions?</h2>
+          <p>Our support team is standing by to help you gear up.</p>
+          <a routerLink="/contact" class="btn-primary">Contact Expedition Support</a>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>

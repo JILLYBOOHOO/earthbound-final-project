@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ThemeService } from '../../services/theme.service';
 import { CartService } from '../../services/cart.service';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,12 +14,15 @@ export class NavbarComponent implements OnInit {
   searchQuery: string = '';
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
+  userName: string = '';
   cartItemCount: number = 0;
+  wishlistCount: number = 0;
 
   constructor(
     private authService: AuthService, 
     private themeService: ThemeService,
     private cartService: CartService,
+    private wishlistService: WishlistService,
     private router: Router
   ) { }
 
@@ -26,10 +30,15 @@ export class NavbarComponent implements OnInit {
     this.authService.currentUser.subscribe(user => {
       this.isLoggedIn = !!user;
       this.isAdmin = this.authService.isAdmin();
+      this.userName = user?.username || user?.name || '';
     });
 
     this.cartService.cart$.subscribe(items => {
       this.cartItemCount = items.length;
+    });
+
+    this.wishlistService.wishlist$.subscribe(items => {
+      this.wishlistCount = items.length;
     });
   }
 

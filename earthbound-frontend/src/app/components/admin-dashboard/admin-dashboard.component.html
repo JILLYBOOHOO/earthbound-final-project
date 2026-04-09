@@ -38,6 +38,13 @@
       <button (click)="changeView('users')" [class.active]="currentView === 'users'">
         <span class="nav-icon">👥</span> Users
       </button>
+
+      <div class="sidebar-footer">
+        <button class="theme-toggle-btn" (click)="toggleTheme()">
+          <span class="nav-icon">{{ isDarkMode() ? '☀️' : '🌙' }}</span>
+          {{ isDarkMode() ? 'Light Mode' : 'Dark Mode' }}
+        </button>
+      </div>
     </nav>
   </aside>
 

@@ -15,8 +15,10 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
+    const username = localStorage.getItem('username');
     if (token) {
-      this.currentUserSubject.next({ token, role });
+      const validName = (username && username !== 'undefined') ? username : null;
+      this.currentUserSubject.next({ token, role, username: validName });
     }
   }
 
@@ -29,6 +31,7 @@ export class AuthService {
       tap((res: any) => {
         localStorage.setItem('token', res.token);
         localStorage.setItem('role', res.role);
+        localStorage.setItem('username', res.username);
         this.currentUserSubject.next(res);
       })
     );
@@ -37,6 +40,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('username');
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }

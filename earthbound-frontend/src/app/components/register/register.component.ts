@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class RegisterComponent {
   constructor(
     private authService: AuthService, 
     private router: Router,
+    public route: ActivatedRoute,
     private toastService: ToastService
   ) { }
 
@@ -28,7 +29,8 @@ export class RegisterComponent {
       next: () => {
         this.loading = false;
         this.toastService.success('Explore status acquired! Please login.');
-        this.router.navigate(['/login']);
+        const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+        this.router.navigate(['/login'], { queryParams: { returnUrl } });
       },
       error: (err) => {
         this.loading = false;

@@ -1,17 +1,21 @@
+<div class="user-dashboard-wrapper">
 <div class="user-dashboard container">
   <header class="dashboard-header">
-    <h1>My Account</h1>
-    <span class="user-role">Explorer Profile</span>
+    <div class="header-text">
+       <h1 *ngIf="userName">Hey Welcome, {{userName}}</h1>
+       <h2 class="sub-title">Explorer Dashboard</h2>
+    </div>
+    <span class="user-role">Elite Explorer</span>
   </header>
 
   <section class="order-history">
-    <h3>Order Tracking</h3>
+    <h3>Pack History & Tracking</h3>
     <div *ngIf="orders.length > 0; else noOrders" class="orders-list">
       <div class="order-card" *ngFor="let order of orders">
         <div class="order-top">
           <div class="order-id">Order #{{order.id}}</div>
-          <div class="order-date">Date: {{order.created_at}}</div>
-          <div class="order-status" [attr.data-status]="order.shipping_status">{{order.shipping_status}}</div>
+          <div class="order-date">Date: {{order.date}}</div>
+          <div class="order-status" [attr.data-status]="order.status">{{order.status}}</div>
         </div>
         <div class="order-body">
           <div class="order-tracking" *ngIf="order.tracking_number">
@@ -26,18 +30,19 @@
           </div>
         </div>
         <div class="order-progress">
-          <div class="step" [class.done]="order.shipping_status === 'Pending' || order.shipping_status === 'Shipped' || order.shipping_status === 'Out for Delivery' || order.shipping_status === 'Delivered'">Ordered</div>
-          <div class="step" [class.done]="order.shipping_status === 'Shipped' || order.shipping_status === 'Out for Delivery' || order.shipping_status === 'Delivered'">Shipped</div>
-          <div class="step" [class.done]="order.shipping_status === 'Out for Delivery' || order.shipping_status === 'Delivered'">On the Way</div>
-          <div class="step" [class.done]="order.shipping_status === 'Delivered'">Delivered</div>
+          <div class="step" [class.done]="order.status === 'Pending' || order.status === 'Shipped' || order.status === 'Out for Delivery' || order.status === 'Delivered'">Ordered</div>
+          <div class="step" [class.done]="order.status === 'Shipped' || order.status === 'Out for Delivery' || order.status === 'Delivered'">Shipped</div>
+          <div class="step" [class.done]="order.status === 'Out for Delivery' || order.status === 'Delivered'">On the Way</div>
+          <div class="step" [class.done]="order.status === 'Delivered'">Delivered</div>
         </div>
       </div>
     </div>
     <ng-template #noOrders>
       <div class="empty-orders">
         <p>You haven't placed any orders yet.</p>
-        <button routerLink="/shop">Start Exploring</button>
+        <button routerLink="/shop" class="explore-btn">Start Exploring</button>
       </div>
     </ng-template>
   </section>
+</div>
 </div>

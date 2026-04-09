@@ -6,9 +6,19 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073&auto=format&fit=crop') center/cover no-repeat;
   color: white;
   text-align: center;
+}
+
+.hero-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  animation: heroIn 1.5s ease-out;
 }
 
 .hero-overlay {
@@ -83,78 +93,25 @@
 .primary-btn:hover { background: white; transform: scale(1.05); }
 .secondary-btn:hover { background: rgba(255,255,255,0.1); }
 
-.featured-categories {
-  padding: 8rem 1rem;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  color: #1a1a1a;
-  margin-bottom: 3rem;
-  font-weight: 800;
-  text-align: center;
-}
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
-
-.category-card {
-  height: 450px;
-  border-radius: 24px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  padding: 2.5rem;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.category-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-  z-index: 1;
-}
-
-.category-card.hiking { background: url('https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070&auto=format&fit=crop') center/cover; }
-.category-card.camping { background: url('https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop') center/cover; }
-.category-card.outdoor { background: url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=2070&auto=format&fit=crop') center/cover; }
-
-.category-card:hover { transform: scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
-
-.cat-content {
-  position: relative;
-  z-index: 2;
-  color: white;
-}
-
-.cat-content h3 { font-size: 2rem; margin-bottom: 0.5rem; }
-.cat-content p { opacity: 0.8; font-weight: 500; }
 
 .mission-section {
   background: #2a6e3f;
   color: white;
-  padding: 8rem 1rem;
+  padding: 4rem 1rem;
   text-align: center;
 }
 
-.mission-content h2 { font-size: 3rem; margin-bottom: 2rem; }
-.mission-content p { max-width: 800px; margin: 0 auto 4rem; font-size: 1.2rem; opacity: 0.9; line-height: 1.6; }
+.mission-content h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+.mission-content p { max-width: 800px; margin: 0 auto 3rem; font-size: 1.1rem; opacity: 0.9; line-height: 1.6; }
 
 .stats-grid {
   display: flex;
   justify-content: center;
-  gap: 5rem;
+  gap: 3rem;
 }
 
-.stat-item h3 { font-size: 3rem; color: #f0b429; margin-bottom: 0.5rem; }
-.stat-item p { font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
+.stat-item h3 { font-size: 2.5rem; color: #f0b429; margin-bottom: 0.25rem; }
+.stat-item p { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
 
 @media (max-width: 900px) {
   .hero-title { font-size: 3rem; }
